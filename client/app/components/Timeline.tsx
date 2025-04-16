@@ -1,4 +1,5 @@
 import React from 'react'
+import Post from './Post'
 
 const Timeline = () => {
   return (
@@ -18,7 +19,7 @@ const Timeline = () => {
         </button>
       </form>
     </div>
-    
+    <Post/>
   </main>
 </div>
   )
