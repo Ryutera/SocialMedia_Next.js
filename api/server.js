@@ -1,17 +1,18 @@
 const express = require("express");
-const router = require("./routers/auth");
 const app = express();
-const PORT = 5000;
-require("dotenv").config()
-const authRoute = require(".routers/auth")
+const cors = require("cors")
 
+const authRoute = require("./routers/auth")
+require("dotenv").config()
+const PORT = 5000;
+
+// フロントとバックエンドのサーバーの行き来を可能にする
+app.use(cors())
+app.use(express.json());
 
 app.use("/api/auth", authRoute)
 
-
 //jsonデータを送る
-app.use(express.json());
-
 
 
 

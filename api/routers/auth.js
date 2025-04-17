@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const { PrismaClient } = require("../api/generated/prisma");
+const { PrismaClient } = require("../generated/prisma");
 const prisma = new PrismaClient();
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
@@ -11,7 +11,7 @@ router.post("/register", async (req, res) => {
     const { username, email, password } = req.body;
 
     // パスワードをランダムで10回適当な文字に入れ替える
-    const hashedPassword = await bcryot.hash(password,10)
+    const hashedPassword = await bcrypt.hash(password,10)
     const user = await prisma.user.create({
         data: {
             username,

@@ -1,16 +1,37 @@
 "use client"
+
 import Head from 'next/head'
-import React, { useState } from 'react'
+import React, {useState } from 'react'
+import apiClient from '../lib/apiClient'
+import { useRouter } from 'next/navigation'
 
 const page = () => {
-    const [name, setName] = useState("")
+    const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const router=useRouter()
 
-    const handleSubmit =(e:React.FormEvent<HTMLFormElement>)=>{
+    const handleSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
 e.preventDefault()
-//ここでapiを呼ぶ
+
+try {
+   await  apiClient.post("/auth/register",{
+     username,
+        email,
+        password}
+       
+    
+)
+   router.push("/login") 
+
+} catch (error) {
+    alert("Incorrectly entered information")
+    console.log(error)
+    
+}
+
     }
+
   return (
     <div
     style={{ height: "88vh" }}
@@ -38,8 +59,8 @@ e.preventDefault()
               id="name"
               name="name"
               type="text"
-              onChange={(e:React.ChangeEvent<HTMLInputElement>)=>setName(e.target.value) }
-              value={name}
+              onChange={(e:React.ChangeEvent<HTMLInputElement>)=>setUsername(e.target.value) }
+              value={username}
               autoComplete="name"
               required
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
