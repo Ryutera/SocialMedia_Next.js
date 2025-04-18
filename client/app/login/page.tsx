@@ -4,11 +4,14 @@ import Head from "next/head";
 import React, { useState } from "react";
 import apiClient from "../lib/apiClient";
 import { useRouter } from "next/navigation";
+import { useAuth } from "../context/auth";
 
 const login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 const router = useRouter()
+
+const {login} = useAuth()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,7 +25,8 @@ const router = useRouter()
       });
       
       const token = responce.data.token
-      console.log(token)
+      
+      login(token)
 
 
       router.push("/");
