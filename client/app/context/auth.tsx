@@ -12,8 +12,10 @@ logout:()=>void
 }
 
 const AuthContext = React.createContext<AuthContextType>({
+    //デフォルトの値を何かしら設定しないとエラーになる
     login:()=>{},
     logout:()=>{},
+
 })
 
 export const useAuth= () =>{

@@ -1,4 +1,3 @@
-
 const express = require("express")
 const router = express.Router()
 const { PrismaClient } = require("../generated/prisma");
@@ -7,24 +6,31 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
 
-// 新規ユーザー
-router.post("/register", async (req, res) => {
-    const { username, email, password } = req.body;
+// post api
+router.post("/post", async (req, res) => {
+    const { content } = req.body;
 
-    // パスワードをランダムで10回適当な文字に入れ替える
-    const hashedPassword = await bcrypt.hash(password,10)
-    const user = await prisma.user.create({
-        data: {
-            username,
-            email,
-            password: hashedPassword,
+    if(!content){
+        return res.status(400).json({message:"no post content"})
+    }
+   try {
+
+    const newPost = await prisma.post.create({
+        data:{
+            content,
+            authorId:1
         }
-    });
-    return res.json({ user });
+    })
+    
+    res.status(201).json(newPost)
+   } catch (error) {
+    console.log(error)
+    res.status(500).json({message:"server error"})
+   }
 });
 
-//jsonwebtoken（JWT）：ログイン後にトークンを発行する。
-// ユーザーログイン
+
+
 router.post("/login", async(req,res)=>{
     const {email, password
     } = req.body
