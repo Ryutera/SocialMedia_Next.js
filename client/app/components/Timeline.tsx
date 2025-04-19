@@ -2,18 +2,21 @@
 import React, { useState } from 'react'
 import Post from './Post'
 import apiClient from '../lib/apiClient'
+import { PostType } from '../types'
 
 const Timeline = () => {
 
   const [postText,setPostText] = useState<string>("")
+  const [latestPost, setLatestPost ]= useState<PostType[]>([])
 
   const handleSubmit = async(e:React.FormEvent<HTMLFormElement>)=>{
 e.preventDefault()
 
 try {
-  await apiClient.post("/posts/post",{
+  const newPost = await apiClient.post("/posts/post",{
     content:postText
   })
+  setLatestPost((prev)=>[newPost.data, ...prev])
   setPostText("")
   
 } catch (error) {
@@ -39,7 +42,7 @@ try {
         </button>
       </form>
     </div>
-    <Post/>
+    {latestPost.map((post:PostType)=>(<Post key={post.id} post={post}/>))}
   </main>
 </div>
   )
