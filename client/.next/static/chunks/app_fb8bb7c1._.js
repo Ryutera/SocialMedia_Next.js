@@ -130,9 +130,19 @@ const Timeline = ()=>{
     _s();
     const [postText, setPostText] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [latestPost, setLatestPost] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const postFind = async ()=>{
+        const posts = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$apiClient$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])("/posts/get_latest_posts");
+        setLatestPost(posts.data);
+    };
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "Timeline.useEffect": ()=>{
+            postFind();
+        }
+    }["Timeline.useEffect"], []);
     const handleSubmit = async (e)=>{
         e.preventDefault();
         try {
+            //axiosは自動でjson形式をオブジェクトにして受け取る
             const newPost = await __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$apiClient$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post("/posts/post", {
                 content: postText
             });
@@ -162,7 +172,7 @@ const Timeline = ()=>{
                                 value: postText
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Timeline.tsx",
-                                lineNumber: 31,
+                                lineNumber: 41,
                                 columnNumber: 9
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -171,40 +181,40 @@ const Timeline = ()=>{
                                 children: "POST"
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Timeline.tsx",
-                                lineNumber: 37,
+                                lineNumber: 47,
                                 columnNumber: 9
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/components/Timeline.tsx",
-                        lineNumber: 30,
+                        lineNumber: 40,
                         columnNumber: 7
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/components/Timeline.tsx",
-                    lineNumber: 29,
+                    lineNumber: 39,
                     columnNumber: 5
                 }, this),
                 latestPost.map((post)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$Post$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                         post: post
                     }, post.id, false, {
                         fileName: "[project]/app/components/Timeline.tsx",
-                        lineNumber: 45,
+                        lineNumber: 55,
                         columnNumber: 39
                     }, this))
             ]
         }, void 0, true, {
             fileName: "[project]/app/components/Timeline.tsx",
-            lineNumber: 28,
+            lineNumber: 38,
             columnNumber: 3
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/components/Timeline.tsx",
-        lineNumber: 27,
+        lineNumber: 37,
         columnNumber: 5
     }, this);
 };
-_s(Timeline, "SccHDBd89N2ngtP552mjZmiiRD8=");
+_s(Timeline, "gtMYh5n3THEypSnUcHVzbQbWqYA=");
 _c = Timeline;
 const __TURBOPACK__default__export__ = Timeline;
 var _c;

@@ -3,7 +3,8 @@ const router = express.Router()
 const { PrismaClient } = require("../generated/prisma");
 const prisma = new PrismaClient();
 const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const data = require("langs/data");
 
 
 // post api
@@ -22,6 +23,7 @@ router.post("/post", async (req, res) => {
         }
     })
     
+    // apiの呼び込み先に値を返却している、オブジェクトはそのまま送れないのでjsonで変換
     res.status(201).json(newPost)
    } catch (error) {
     console.log(error)
@@ -29,31 +31,20 @@ router.post("/post", async (req, res) => {
    }
 });
 
-
-
-router.post("/login", async(req,res)=>{
-    const {email, password
-    } = req.body
-    const user = await prisma.user.findUnique({where:{email}})
-
-    if (!user) {
-        return res.status(401).json({error:"email or password is wrong"})
-        
-    }
-    const isPasswordValid = await bcrypt.compare(password, user.password)
-
-    if (!isPasswordValid) {
-        return res.status(402).json({error:"wrong password"}
-
+router.get("/get_latest_posts", async(req,res)=>{
+    
+    try {
+        const posts = await prisma.post.findMany({take:10,orderBy:{createdAt:"desc"}}
+            
         )
-        
+       res.status(200).json(posts)
+    } catch (error) {
+        res.status(500).json({message:"server error"})
     }
-
-    const token = jwt.sign({id:user.id},process.env.SECRET_KEY ,{
-        expiresIn:"1d", 
-    })
-
-    return res.json({"token":token})
 })
+
+
+
+
 
 module.exports = router

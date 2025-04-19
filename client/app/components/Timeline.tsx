@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import Post from './Post'
 import apiClient from '../lib/apiClient'
 import { PostType } from '../types'
@@ -9,10 +9,20 @@ const Timeline = () => {
   const [postText,setPostText] = useState<string>("")
   const [latestPost, setLatestPost ]= useState<PostType[]>([])
 
+  const postFind = async()=>{
+const posts = await apiClient("/posts/get_latest_posts")
+setLatestPost(posts.data)
+  }
+
+useEffect(()=>{
+ postFind()
+},[])
+
   const handleSubmit = async(e:React.FormEvent<HTMLFormElement>)=>{
 e.preventDefault()
 
 try {
+  //axiosは自動でjson形式をオブジェクトにして受け取る
   const newPost = await apiClient.post("/posts/post",{
     content:postText
   })
