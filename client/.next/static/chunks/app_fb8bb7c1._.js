@@ -33,7 +33,7 @@ const Post = (props)=>{
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                     className: "font-semibold text-md",
-                                    children: post?.author?.username
+                                    children: post.author?.username
                                 }, void 0, false, {
                                     fileName: "[project]/app/components/Post.tsx",
                                     lineNumber: 20,
@@ -41,7 +41,7 @@ const Post = (props)=>{
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     className: "text-gray-500 text-sm",
-                                    children: post.createdAt
+                                    children: new Date(post.createdAt).toLocaleString()
                                 }, void 0, false, {
                                     fileName: "[project]/app/components/Post.tsx",
                                     lineNumber: 21,
@@ -131,8 +131,12 @@ const Timeline = ()=>{
     const [postText, setPostText] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [latestPost, setLatestPost] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const postFind = async ()=>{
-        const posts = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$apiClient$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])("/posts/get_latest_posts");
-        setLatestPost(posts.data);
+        try {
+            const posts = await __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$apiClient$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get("/posts/get_latest_posts");
+            setLatestPost(posts.data);
+        } catch (error) {
+            console.log(error);
+        }
     };
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "Timeline.useEffect": ()=>{
@@ -172,7 +176,7 @@ const Timeline = ()=>{
                                 value: postText
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Timeline.tsx",
-                                lineNumber: 41,
+                                lineNumber: 46,
                                 columnNumber: 9
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -181,36 +185,36 @@ const Timeline = ()=>{
                                 children: "POST"
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Timeline.tsx",
-                                lineNumber: 47,
+                                lineNumber: 52,
                                 columnNumber: 9
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/components/Timeline.tsx",
-                        lineNumber: 40,
+                        lineNumber: 45,
                         columnNumber: 7
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/components/Timeline.tsx",
-                    lineNumber: 39,
+                    lineNumber: 44,
                     columnNumber: 5
                 }, this),
                 latestPost.map((post)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$Post$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                         post: post
                     }, post.id, false, {
                         fileName: "[project]/app/components/Timeline.tsx",
-                        lineNumber: 55,
+                        lineNumber: 60,
                         columnNumber: 39
                     }, this))
             ]
         }, void 0, true, {
             fileName: "[project]/app/components/Timeline.tsx",
-            lineNumber: 38,
+            lineNumber: 43,
             columnNumber: 3
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/components/Timeline.tsx",
-        lineNumber: 37,
+        lineNumber: 42,
         columnNumber: 5
     }, this);
 };

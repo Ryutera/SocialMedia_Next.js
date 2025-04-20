@@ -50,4 +50,6 @@ router.post("/login", async(req,res)=>{
     return res.json({"token":token})
 })
 
+
+// （APIのルール集）を module.exports = router で外に出してる。
 module.exports = router

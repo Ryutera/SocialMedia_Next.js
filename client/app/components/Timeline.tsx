@@ -10,8 +10,13 @@ const Timeline = () => {
   const [latestPost, setLatestPost ]= useState<PostType[]>([])
 
   const postFind = async()=>{
-const posts = await apiClient("/posts/get_latest_posts")
+    try {
+      const posts = await apiClient.get("/posts/get_latest_posts")
 setLatestPost(posts.data)
+    } catch (error) {
+      console.log(error)
+    }
+
   }
 
 useEffect(()=>{
