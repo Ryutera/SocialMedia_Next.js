@@ -5,10 +5,11 @@ const prisma = new PrismaClient();
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken");
 const data = require("langs/data");
+const isAuthenticated = require("../middlewares/isAuthenticated");
 
 
 // post api
-router.post("/post", async (req, res) => {
+router.post("/post", isAuthenticated, async (req, res) => {
     const { content } = req.body;
 
     if(!content){
@@ -19,11 +20,12 @@ router.post("/post", async (req, res) => {
     const newPost = await prisma.post.create({
         data:{
             content,
-            authorId:1
+            authorId:req.userId, 
         },
         include:{
             author:true
         }
+        
     })
     
     // apiの呼び込み先に値を返却している、オブジェクトはそのまま送れないのでjsonで変換
