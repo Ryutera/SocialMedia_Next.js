@@ -39,7 +39,8 @@ var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.sign
 ;
 ;
 const AuthContext = /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createContext({
-    //デフォルトの値を何かしら設定しないとエラーになる
+    //初期値を何かしら設定しないとエラーになる
+    user: null,
     login: ()=>{},
     logout: ()=>{}
 });
@@ -50,34 +51,50 @@ const useAuth = ()=>{
 _s(useAuth, "gDsCjeeItUuvgOWf1v4qoK9RF6k=");
 const AuthProvider = ({ children })=>{
     _s1();
+    const [user, setUser] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "AuthProvider.useEffect": ()=>{
             const token = localStorage.getItem("auth_token");
             if (token) {
                 __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$apiClient$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].defaults.headers["Authorization"] = `Bearer ${token}`;
+                __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$apiClient$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get("/users/find").then({
+                    "AuthProvider.useEffect": (res)=>{
+                        setUser(res.data.user);
+                    }
+                }["AuthProvider.useEffect"]).catch({
+                    "AuthProvider.useEffect": (err)=>{
+                        console.log(err);
+                    }
+                }["AuthProvider.useEffect"]);
             }
         }
     }["AuthProvider.useEffect"], []);
     const login = async (token)=>{
         localStorage.setItem("auth_token", token);
+        __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$apiClient$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get("/users/find").then((res)=>{
+            setUser(res.data.user);
+        }).catch((err)=>{
+            console.log(err);
+        });
     };
     const logout = ()=>{
         localStorage.removeItem("auth_token");
     };
     const value = {
         login,
-        logout
+        logout,
+        user
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(AuthContext.Provider, {
         value: value,
         children: children
     }, void 0, false, {
         fileName: "[project]/app/context/auth.tsx",
-        lineNumber: 50,
+        lineNumber: 66,
         columnNumber: 5
     }, this);
 };
-_s1(AuthProvider, "OD7bBpZva5O2jO+Puf00hKivP7c=");
+_s1(AuthProvider, "5s2qRsV95gTJBmaaTh11GoxYeGE=");
 _c = AuthProvider;
 var _c;
 __turbopack_context__.k.register(_c, "AuthProvider");

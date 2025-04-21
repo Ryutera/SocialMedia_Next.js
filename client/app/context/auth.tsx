@@ -34,7 +34,7 @@ export const AuthProvider = ({children}:AuthProviderProps) =>{
         const token = localStorage.getItem("auth_token")
         if (token) {
             apiClient.defaults.headers["Authorization"] = `Bearer ${token}`
-            apiClient.get("/users/find").then((res)=>{
+            apiClient.get("/user/find").then((res)=>{
                 setUser(res.data.user)
             }).catch((err)=>{
                 console.log(err)
@@ -44,6 +44,12 @@ export const AuthProvider = ({children}:AuthProviderProps) =>{
     },[])
 const login = async(token:string) =>{
     localStorage.setItem("auth_token", token)
+
+    apiClient.get("/users/find").then((res)=>{
+        setUser(res.data.user)
+    }).catch((err)=>{
+        console.log(err)
+    })
 }
 
 const logout = ()=>{
