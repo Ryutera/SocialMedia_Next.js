@@ -14,6 +14,8 @@ function isAuthenticated (req,res,next){
             console.log(err)
             return res.status(401).json({message:"権限がありません"})
         }
+
+        // decodedはこのような値→{ id: 5, iat: 123456789, exp: 123456999 }　ログイン時に設定したものの中身
         req.userId = decoded.id
          //チェックOKなので、次のルート処理に進ませる。
     next()
@@ -22,3 +24,4 @@ function isAuthenticated (req,res,next){
 }
 
 module.exports = isAuthenticated
+

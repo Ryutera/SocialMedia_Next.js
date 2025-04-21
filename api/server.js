@@ -4,6 +4,7 @@ const cors = require("cors")
 
 const authRoute = require("./routers/auth")
 const postsRoute = require("./routers/posts")
+const userRoute = require("./routers/user")
 require("dotenv").config()
 const PORT = 5000;
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoute)
 app.use("/api/posts", postsRoute)
+app.use("/api/user",userRoute)
 
 //jsonデータを送る
 

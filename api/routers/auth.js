@@ -42,11 +42,12 @@ router.post("/login", async(req,res)=>{
         )
         
     }
-
+    // jwt.sign(payload, secretOrPrivateKey, options)
     const token = jwt.sign({id:user.id},process.env.SECRET_KEY ,{
         expiresIn:"1d", 
     })
 
+    // 受け取り(login.tsx)ではresponse.data.tokenとして受け取っている
     return res.json({"token":token})
 })
 

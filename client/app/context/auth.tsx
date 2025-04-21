@@ -1,5 +1,5 @@
 "use client"
-import React, { ReactNode, useContext, useEffect } from "react"
+import React, { ReactNode, useContext, useEffect, useState } from "react"
 import apiClient from "../lib/apiClient";
 
 
@@ -8,12 +8,14 @@ interface AuthProviderProps{
 }
 
 interface AuthContextType{
+    user: null | {id:number; email:string; username:string };
 login:(token:string)=> void;
 logout:()=>void
 }
 
 const AuthContext = React.createContext<AuthContextType>({
-    //デフォルトの値を何かしら設定しないとエラーになる
+    //初期値を何かしら設定しないとエラーになる
+    user: null,
     login:()=>{},
     logout:()=>{},
 
@@ -24,12 +26,19 @@ export const useAuth= () =>{
 }
 
 export const AuthProvider = ({children}:AuthProviderProps) =>{
+
+    const [user, setUser] = useState<null|{id:number; email:string; username:string }>(null)
    
 
     useEffect(()=>{
         const token = localStorage.getItem("auth_token")
         if (token) {
             apiClient.defaults.headers["Authorization"] = `Bearer ${token}`
+            apiClient.get("/users/find").then((res)=>{
+                setUser(res.data.user)
+            }).catch((err)=>{
+                console.log(err)
+            })
         }
 
     },[])
@@ -42,8 +51,9 @@ const logout = ()=>{
 }
 
 const value = {
-    login, 
-    logout
+    login,
+    logout,
+    user
 }
 
 return (
