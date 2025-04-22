@@ -54,6 +54,8 @@ const login = async(token:string) =>{
 
 const logout = ()=>{
     localStorage.removeItem("auth_token")
+    setUser(null)
+   delete  apiClient.defaults.headers["Authorization"]
 }
 
 const value = {
