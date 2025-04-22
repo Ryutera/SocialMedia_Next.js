@@ -59,7 +59,33 @@ router.get("/get_latest_posts", async(req,res)=>{
     }
 })
 
+//プロフィールページでのそのユーザーの投稿のみが見える
+router.get("/:userId", async(req,res)=>{
 
+    const {userId} = req.params
+
+    try {
+        const userPosts = await prisma.post.findMany({
+            where:{
+                authorId:parseInt(userId)
+            }
+            ,orderBy:{
+                createdAt:"desc"
+            },include:{
+author:true
+            }
+        })
+
+        return res.status(200).json(userPosts)
+        
+    } catch (error) {
+
+        console.log(error)
+        res.status(500).json({message:"server error"})
+        
+    }
+
+})
 
 
 
