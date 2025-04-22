@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 type Props = {
   params: {
-    userId: number
+    userId: string
   }
 }
 
@@ -14,7 +14,7 @@ type Props = {
 
 
 
-async function getProfile(userId: number) {
+async function getProfile(userId: string) {
   try {
     const res = await apiClient.get(`user/profile/${userId}`)
 
@@ -26,7 +26,7 @@ async function getProfile(userId: number) {
 }
 
 
-async function getPosts(userId: number) {
+async function getPosts(userId: string) {
   try {
     const res = await apiClient.get(`posts/${userId}`)
 
