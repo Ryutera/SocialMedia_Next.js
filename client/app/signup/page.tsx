@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import apiClient from "../lib/apiClient";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -118,4 +118,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

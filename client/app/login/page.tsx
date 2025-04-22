@@ -6,7 +6,7 @@ import apiClient from "../lib/apiClient";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../context/auth";
 
-const login = () => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 const router = useRouter()
@@ -102,4 +102,4 @@ const {login} = useAuth()
   );
 };
 
-export default login;
+export default Login;
