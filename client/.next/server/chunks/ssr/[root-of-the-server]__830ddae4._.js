@@ -194,6 +194,7 @@ const AuthProvider = ({ children })=>{
     }, []);
     const login = async (token)=>{
         localStorage.setItem("auth_token", token);
+        __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$apiClient$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].defaults.headers["Authorization"] = `Bearer ${token}`;
         __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$apiClient$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get("/users/find").then((res)=>{
             setUser(res.data.user);
         }).catch((err)=>{

@@ -44,7 +44,7 @@ export const AuthProvider = ({children}:AuthProviderProps) =>{
     },[])
 const login = async(token:string) =>{
     localStorage.setItem("auth_token", token)
-
+apiClient.defaults.headers["Authorization"] = `Bearer ${token}`
     apiClient.get("/users/find").then((res)=>{
         setUser(res.data.user)
     }).catch((err)=>{
