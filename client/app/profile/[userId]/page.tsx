@@ -1,9 +1,5 @@
 import apiClient from '@/app/lib/apiClient'
-import { Profile } from '@/app/types'
-import axios from 'axios'
-import { profile } from 'console'
-import { notFound } from 'next/navigation'
-import React from 'react'
+import { PostType, Profile } from '@/app/types'
 
 
 type Props = {
@@ -12,10 +8,15 @@ type Props = {
   }
 }
 
+//api叩いてユーザーの投稿のみをしゅとくする
+
+
+
+
 async function getProfile(userId: number) {
   try {
     const res = await apiClient.get(`user/profile/${userId}`)
-    
+
     return res.data
   } catch (err) {
     console.error('Profile fetch failed:', err)
@@ -24,10 +25,24 @@ async function getProfile(userId: number) {
 }
 
 
+async function getPosts(userId: number) {
+  try {
+    const res = await apiClient.get(`posts/${userId}`)
+
+    return res.data
+  } catch (err) {
+    console.error('Profile fetch failed:', err)
+    return null
+  }
+}
+
+
+
 const UserProfile =  async ({ params }: Props) => {
  const {userId} = params 
 
 const profile  = await getProfile(userId)
+const posts = await getPosts(userId)
 
 console.log(profile)
 
@@ -45,18 +60,22 @@ console.log(profile)
         </div>
       </div>
     </div>
-    <div className="bg-white shadow-md rounded p-4 mb-4" >
-      <div className="mb-4">
-        <div className="flex items-center mb-2">
-          <img className="w-10 h-10 rounded-full mr-2" alt="User Avatar" />
-          <div>
-            <h2 className="font-semibold text-md">{profile.user.username}</h2>
-            <p className="text-gray-500 text-sm">2025/01/01</p>
-          </div>
-        </div>
-        <p className="text-gray-700">First post</p>
-      </div>
-    </div>
+    {posts.map((post:PostType)=>(
+ <div className="bg-white shadow-md rounded p-4 mb-4" key={post.id} >
+ <div className="mb-4">
+   <div className="flex items-center mb-2">
+     <img className="w-10 h-10 rounded-full mr-2" alt="User Avatar" src={profile.profileImageUrl}/>
+     <div>
+       <h2 className="font-semibold text-md">{post.author.username}</h2>
+       <p className="text-gray-500 text-sm">{new Date(post.createdAt).toLocaleString()}</p>
+     </div>
+   </div>
+   <p className="text-gray-700">{post.content}</p>
+ </div>
+</div>
+
+    ))}
+   
   </div>
 </div>
   )
