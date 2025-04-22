@@ -35,6 +35,7 @@ try {
   setPostText("")
   
 } catch (error) {
+  console.log(error)
   alert("ログインしてください")
 }
   }
