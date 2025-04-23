@@ -36,7 +36,7 @@ try {
   
 } catch (error) {
   console.log(error)
-  alert("ログインしてください")
+  alert("Login required")
 }
   }
   return (
