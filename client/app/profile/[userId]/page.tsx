@@ -3,16 +3,7 @@ import { PostType } from '@/app/types'
 import Image from 'next/image'
 
 
-type Props = {
-  params: {
-    userId: string
-  }
-}
-
 //api叩いてユーザーの投稿のみをしゅとくする
-
-
-
 
 async function getProfile(userId: string) {
   try {
@@ -39,8 +30,8 @@ async function getPosts(userId: string) {
 
 
 
-const UserProfile =  async ({ params }: Props) => {
- const {userId} = params 
+const UserProfile =  async ({params}:{params:Promise<{userId:string}>}) => {
+ const {userId} = await params 
 
 const profile  = await getProfile(userId)
 const posts = await getPosts(userId)
